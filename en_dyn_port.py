@@ -15,6 +15,7 @@ if ans == 'y' or ans == '':
 elif ans == 'n':
     print ("禁止动态端口")
     writejson.EnDynPort(0)
+    sys.exit()
 else:
     print ("输入错误，输入y或者n")
 
