@@ -26,9 +26,9 @@ ConfStreamNetwork=ConfStream[u"network"]
 ConfStreamSecurity=ConfStream[u"security"]
 
 if config[u"inboundDetour"] and "port" in config[u"inboundDetour"][0]:
-    ConfigDynPortRange="动态端口范围:"+config[u"inboundDetour"][0][u"port"]
+    ConfigDynPortRange=config[u"inboundDetour"][0][u"port"]
 else:
-    ConfigDynPortRange="动态端口:禁止"
+    ConfigDynPortRange=""
 
 if ConfStreamNetwork=="kcp" :
     if ConfStreamKcpSettings.has_key('header'):
