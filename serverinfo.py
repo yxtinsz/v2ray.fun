@@ -41,3 +41,31 @@ if readjson.ConfigDynPortRange:
     print("动态端口范围:%s") % str(readjson.ConfigDynPortRange)
 else:
     print("动态端口:禁止")
+
+config = {
+    "add": "",
+    "port": "",
+    "id": "",
+    "aid": "",
+    "net": "",
+    "type": "",
+    "tls": "",
+    "host": ""
+}
+
+config["add"] = str(readjson.ConfIP)
+config["port"] = str(readjson.ConfPort)
+config["id"] = str(readjson.ConfUUID)
+config["aid"] = str(readjson.ConfAlterId)
+config["net"] = str(readjson.ConfStreamNetwork)
+if readjson.ConfStreamNetwork == "kcp":
+    config["type"] = str(readjson.ConfStreamHeader)
+if (readjson.ConfStreamSecurity == "tls"):
+    config["tls"] = "tls"
+config["host"] = str(readjson.ConfPath)
+base64Str = base64.encodestring(json.dumps(config))
+base64Str = ''.join(base64Str.split())
+#green show
+print("\033[32m")
+print("vmess://%s") % base64Str
+print("\033[0m")
