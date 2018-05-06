@@ -2,6 +2,7 @@
 # -*- coding: utf-8 -*-
 import os
 import json
+import urllib2
 
 #打开配置文件
 jsonfile = file("/etc/v2ray/config.json")
@@ -21,7 +22,10 @@ ConfUUID=ConfInbound[u"settings"][u"clients"][0][u"id"]
 ConfSecurity=ConfInbound[u"settings"][u"clients"][0][u"security"]
 ConfAlterId=ConfInbound[u"settings"][u"clients"][0][u"alterId"]
 ConfStream=ConfInbound[u"streamSettings"]
-ConfStreamHttp2Settings=ConfStream[u"httpSettings"]
+if "httpSettings" in ConfInbound[u"streamSettings"]:
+    ConfStreamHttp2Settings=ConfStream[u"httpSettings"]
+else:
+    ConfStreamHttp2Settings=""
 ConfStreamKcpSettings=ConfStream[u'kcpSettings']
 ConfStreamNetwork=ConfStream[u"network"]
 ConfStreamSecurity=ConfStream[u"security"]

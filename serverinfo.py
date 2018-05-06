@@ -2,11 +2,8 @@
 # -*- coding: utf-8 -*-
 
 import readjson
-import urllib2
 import base64
-#获取本机IP地址
-myip = urllib2.urlopen('http://api.ipify.org').read()
-myip = myip.strip()
+import json
 
 #判断传输配置
 mystreamnetwork=str(readjson.ConfStreamNetwork)
@@ -32,7 +29,7 @@ else:
     mystreamsecurity = "TLS：关闭"
 
 #输出信息
-print("服务器IP：%s") % str(myip)
+print("服务器IP：%s") % str(readjson.ConfIP)
 print("主端口：%s") % str(readjson.ConfPort)
 print("UUID：%s") % str(readjson.ConfUUID)
 print("alter ID: %s") % str(readjson.ConfAlterId)
