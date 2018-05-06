@@ -38,6 +38,7 @@
             "security": "",
             "tlsSettings": {},
             "wsSettings": null, 
+            "httpSettings": null,
             "network": "tcp", 
             "kcpSettings": null, 
             "tcpSettings": {

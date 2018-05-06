@@ -3,6 +3,8 @@
 import os
 import json
 import readjson
+import random
+import string
 
 
 #打开配置文件
@@ -112,9 +114,21 @@ def WriteTLS(action,domain):
         tls_settings[u"certificates"][0][u"certificateFile"] = crt_file
         tls_settings[u"certificates"][0][u"keyFile"] = key_file
         config[u"inbound"][u"streamSettings"][u"tlsSettings"] = tls_settings
+
+        http2_file = file("/usr/local/v2ray.fun/json_template/http2.json")
+        http2_settings=json.load(http2_file)
+        #随机生成8位的伪装path
+        salt = '/' + ''.join(random.sample(string.ascii_letters + string.digits, 8)) + '/'
+        http2_settings[u"path"]=salt
+        config[u"inbound"][u"streamSettings"][u"httpSettings"]=http2_settings
+        config[u"inbound"][u"streamSettings"][u"network"]="h2"
+        config[u"inbound"][u"streamSettings"][u"kcpSettings"]=None
+
         domainfile = file("/usr/local/v2ray.fun/mydomain", "w+")
         domainfile.writelines(str(domain))
         domainfile.close()
+
+
         Write()
     elif action == "off":
         config[u"inbound"][u"streamSettings"][u"security"] = ""

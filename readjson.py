@@ -21,9 +21,20 @@ ConfUUID=ConfInbound[u"settings"][u"clients"][0][u"id"]
 ConfSecurity=ConfInbound[u"settings"][u"clients"][0][u"security"]
 ConfAlterId=ConfInbound[u"settings"][u"clients"][0][u"alterId"]
 ConfStream=ConfInbound[u"streamSettings"]
+ConfStreamHttp2Settings=ConfStream[u"httpSettings"]
 ConfStreamKcpSettings=ConfStream[u'kcpSettings']
 ConfStreamNetwork=ConfStream[u"network"]
 ConfStreamSecurity=ConfStream[u"security"]
+
+if (ConfStreamSecurity=="tls"):
+    domainfile = file("/usr/local/v2ray.fun/mydomain", "r")
+    content = domainfile.read()
+    ConfIP = str(content)
+    domainfile.close()
+else:
+    #获取本机IP地址
+	myip = urllib2.urlopen('http://api.ipify.org').read()
+	ConfIP = myip.strip()
 
 if config[u"inboundDetour"] and "port" in config[u"inboundDetour"][0]:
     ConfigDynPortRange=config[u"inboundDetour"][0][u"port"]
@@ -35,3 +46,8 @@ if ConfStreamNetwork=="kcp" :
         ConfStreamHeader=ConfStreamKcpSettings[u"header"][u'type']
     else:
         ConfStreamHeader="none"
+
+if ConfStreamSecurity=="tls" and ConfStreamHttp2Settings != None:
+    ConfPath=ConfStreamHttp2Settings[u"path"]
+else:
+    ConfPath=""
